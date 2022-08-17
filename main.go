@@ -1,6 +1,9 @@
 package main
 
+// run an test @ http://localhost:3000/?name=Raf
+
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 )
@@ -12,7 +15,11 @@ func main() {
 		if len(names)==1{
 			name = names[0]
 		}
-		w.Write([]byte("Hello "+name))
+		w.Write([]byte("Hello "+name+"\n"))
+
+		m := map[string]string{"name": name} 
+		enc := json.NewEncoder(w)
+		enc.Encode(m)
 	})
 
 	err := http.ListenAndServe(":3000", nil)
